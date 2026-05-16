@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import Navbar from "@/app/components/Navbar";
 import HeroSection from "@/app/components/sections/HeroSection";
 import Whychoosesection from "@/app/components/sections/Whychoosesection";

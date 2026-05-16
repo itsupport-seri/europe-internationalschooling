@@ -286,7 +286,10 @@ export default function HeroSection() {
               >
                 <div className="absolute inset-0 overflow-hidden">
                   <img
-                    src={s.src} alt={s.alt}
+                    src={s.src}
+                    alt={s.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    decoding="async"
                     className={`w-full h-full object-cover object-center select-none${i===cur?` ${kbMap[s.kb]}`:""}`}
                     draggable={false}
                   />

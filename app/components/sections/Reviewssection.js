@@ -76,6 +76,7 @@ function VideoCard({ review, index, visible }) {
               src={thumb}
               alt=""
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/btn:scale-110"
             />
 

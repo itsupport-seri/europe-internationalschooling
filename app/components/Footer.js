@@ -789,6 +789,7 @@ export default function Footer() {
                     alt={c.name}
                     className="flag-img"
                     loading="lazy"
+                    decoding="async"
                   />
                   <span className="c-name">{c.name}</span>
                 </a>
@@ -848,7 +849,7 @@ export default function Footer() {
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={a.img} alt={a.label} />
+                  <img src={a.img} alt={a.label} loading="lazy" decoding="async" />
                 </div>
               ))}
             </div>
