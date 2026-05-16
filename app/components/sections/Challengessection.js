@@ -95,12 +95,13 @@ function animateCounter(el, from, to, duration, suffix = "") {
   requestAnimationFrame(tick);
 }
 
-/** Build & run the floating dots canvas */
+/** Build & run the floating dots canvas — pauses when off-screen */
 function initCanvas(canvas) {
   if (!canvas) return () => {};
   const ctx = canvas.getContext("2d");
   let dots = [];
   let rafId = null;
+  let isVisible = false;
 
   function resize() {
     const section = canvas.closest(".chs-section") || canvas.parentElement;
@@ -153,6 +154,7 @@ function initCanvas(canvas) {
   }
 
   function tick() {
+    if (!isVisible) return;
     const W = canvas.width, H = canvas.height;
     const now = performance.now();
     ctx.clearRect(0, 0, W, H);
@@ -173,13 +175,27 @@ function initCanvas(canvas) {
     rafId = requestAnimationFrame(tick);
   }
 
+  function startLoop() {
+    if (!isVisible) return;
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
+  }
+
   resize();
   window.addEventListener("resize", resize);
-  rafId = requestAnimationFrame(tick);
+
+  // Only animate when visible in viewport
+  const visObs = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting;
+    if (isVisible) startLoop();
+    else cancelAnimationFrame(rafId);
+  }, { threshold: 0 });
+  visObs.observe(canvas);
 
   return () => {
     cancelAnimationFrame(rafId);
     window.removeEventListener("resize", resize);
+    visObs.disconnect();
   };
 }
 
@@ -334,7 +350,6 @@ export default function ChallengesSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
         /* ── Section shell ── */
         .chs-section {
@@ -343,7 +358,7 @@ export default function ChallengesSection() {
           padding: 40px 24px 96px;
           overflow: hidden;
           position: relative;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
         }
 
         /* ── Canvas background ── */
@@ -417,7 +432,7 @@ export default function ChallengesSection() {
         .chs-text-center { text-align: center; }
 
         .chs-head1 {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: clamp(1.45rem, 3.2vw, 2.3rem);
           font-weight: 700;
           color: #0f172a;
@@ -430,7 +445,7 @@ export default function ChallengesSection() {
         .chs-head1.chs-show { opacity: 1; transform: translateY(0); }
 
         .chs-head2 {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--font-cormorant), Georgia, serif;
           font-size: clamp(1.9rem, 4.8vw, 3.75rem);
           font-weight: 700;
           line-height: 1.08;
@@ -575,7 +590,7 @@ export default function ChallengesSection() {
         .chs-num {
           position: absolute;
           top: 12px; right: 16px;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 3.2rem;
           font-weight: 700;
           color: rgba(37,99,235,.07);
@@ -642,7 +657,7 @@ export default function ChallengesSection() {
           margin: 0 0 14px;
         }
         .chs-accent-stat {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: clamp(3rem, 5vw, 4.5rem);
           font-weight: 700;
           line-height: 1;
@@ -652,7 +667,7 @@ export default function ChallengesSection() {
           z-index: 1;
         }
         .chs-accent-stat span {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: 1.1rem;
           font-weight: 500;
           color: rgba(255,255,255,.7);
@@ -687,7 +702,7 @@ export default function ChallengesSection() {
         .chs-stat-box.chs-show { opacity: 1; transform: translateY(0); }
         .chs-stat-box:hover    { box-shadow: 0 8px 24px rgba(37,99,235,.1); transform: translateY(-4px) !important; }
         .chs-stat-val {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 2.4rem;
           font-weight: 700;
           color: #2563eb;
@@ -759,7 +774,7 @@ export default function ChallengesSection() {
         }
         .chs-quote-card.chs-show { opacity: 1; transform: translateY(0); }
         .chs-quote-mark {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 5rem;
           color: rgba(37,99,235,.15);
           line-height: .6;
@@ -767,7 +782,7 @@ export default function ChallengesSection() {
           display: block;
         }
         .chs-quote-text {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 1.18rem;
           font-style: italic;
           color: #1e3a8a;

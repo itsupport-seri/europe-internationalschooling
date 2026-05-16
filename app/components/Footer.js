@@ -14,10 +14,8 @@ import {
 
 /* ─── CSS ──────────────────────────────────────────────────────── */
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
   .footer-root * { box-sizing: border-box; }
-  .footer-root { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .footer-root { font-family: var(--font-body), sans-serif; }
 
   /* ── WhatsApp ripple ── */
   @keyframes wa-pulse {

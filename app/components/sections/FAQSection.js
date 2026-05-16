@@ -140,7 +140,7 @@ export default function FAQSection() {
         padding: "72px 20px 80px",
         position: "relative",
         overflow: "hidden",
-        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+        fontFamily: "var(--font-dm), sans-serif",
       }}
     >
       {/* Subtle top accent */}

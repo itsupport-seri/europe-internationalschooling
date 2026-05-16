@@ -201,7 +201,6 @@ export default function WhyChooseSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
         .wcs-section {
           width: 100%;
@@ -209,7 +208,7 @@ export default function WhyChooseSection() {
           padding: 88px 24px 96px;
           overflow: hidden;
           position: relative;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
         }
 
         /* ── SVG bg layer ── */
@@ -255,7 +254,7 @@ export default function WhyChooseSection() {
           border: 1px solid rgba(37,99,235,.22);
           border-radius: 99px;
           padding: 6px 16px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: 11px;
           font-weight: 700;
           letter-spacing: .12em;
@@ -276,7 +275,7 @@ export default function WhyChooseSection() {
         /* ── Headings ── */
         .wcs-text-center { text-align: center; }
         .wcs-head1 {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: clamp(1.5rem, 3.5vw, 2.4rem);
           font-weight: 700;
           color: #0f172a;
@@ -285,7 +284,7 @@ export default function WhyChooseSection() {
           opacity: 0;
         }
         .wcs-head2 {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--font-cormorant), Georgia, serif;
           font-size: clamp(2rem, 5vw, 3.9rem);
           font-weight: 700;
           line-height: 1.08;
@@ -315,7 +314,7 @@ export default function WhyChooseSection() {
 
         /* ── Sub text ── */
         .wcs-sub {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: clamp(.88rem, 1.5vw, 1.02rem);
           color: #475569;
           line-height: 1.65;
@@ -392,7 +391,7 @@ export default function WhyChooseSection() {
         }
 
         .wcs-card-title {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: 1rem;
           font-weight: 700;
           color: #2563eb;
@@ -402,7 +401,7 @@ export default function WhyChooseSection() {
           z-index: 1;
         }
         .wcs-card-desc {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: .875rem;
           color: #64748b;
           line-height: 1.65;
@@ -416,7 +415,7 @@ export default function WhyChooseSection() {
           position: absolute;
           bottom: 10px;
           right: 14px;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 4rem;
           font-weight: 700;
           color: rgba(37,99,235,.055);
@@ -439,7 +438,7 @@ export default function WhyChooseSection() {
           border-radius: 99px;
           background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 60%, #3b82f6 100%);
           color: #fff;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm), sans-serif;
           font-size: 13px;
           font-weight: 700;
           letter-spacing: .1em;

@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 const SLIDES = [
   { id: 1, src: "/slider/1.webp", alt: "Students learning online",    kb: "zoom-in"   },
@@ -112,7 +113,6 @@ export default function HeroSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
         @keyframes kb-zi { from{transform:scale(1) translate(0,0)} to{transform:scale(1.1) translate(-1%,-.4%)} }
         @keyframes kb-zo { from{transform:scale(1.1) translate(0,0)} to{transform:scale(1) translate(1%,.4%)} }
@@ -195,7 +195,7 @@ export default function HeroSection() {
         .mdot.active{background:#fff;transform:scale(1.5)}
 
         .accred-pill{
-          font-family:'DM Sans',sans-serif;
+          font-family:var(--font-dm),sans-serif;
           font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
           color:rgba(255,255,255,.65);
           border:1px solid rgba(255,255,255,.16);
@@ -204,8 +204,6 @@ export default function HeroSection() {
           backdrop-filter:blur(4px);white-space:nowrap;
         }
 
-        .headline{font-family:'Cormorant Garamond',Georgia,serif}
-        .body-font{font-family:'DM Sans',sans-serif}
         .gsap-init{opacity:0}
 
         .accent-line{
@@ -285,12 +283,15 @@ export default function HeroSection() {
                 aria-hidden={i!==cur}
               >
                 <div className="absolute inset-0 overflow-hidden">
-                  <img
+                  <Image
                     src={s.src}
                     alt={s.alt}
+                    fill
+                    priority={i === 0}
                     loading={i === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    className={`w-full h-full object-cover object-center select-none${i===cur?` ${kbMap[s.kb]}`:""}`}
+                    sizes="100vw"
+                    quality={75}
+                    className={`object-cover object-center select-none${i===cur?` ${kbMap[s.kb]}`:""}`}
                     draggable={false}
                   />
                 </div>

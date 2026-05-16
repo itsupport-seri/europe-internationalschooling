@@ -54,7 +54,7 @@ export default function NEASCNewsSection() {
       aria-labelledby="neasc-news-title"
       ref={sectionRef}
       className="relative overflow-hidden bg-gray-100 py-10"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
+      style={{ fontFamily: "var(--font-dm), sans-serif" }}
     >
       {/* Subtle dot texture overlay */}
       <div

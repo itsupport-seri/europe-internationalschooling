@@ -71,7 +71,7 @@ export default function LearningStyleSection() {
       aria-labelledby="learning-style-title"
       ref={sectionRef}
       className="relative scroll-mt-28 overflow-hidden bg-white py-16 md:py-24"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
+      style={{ fontFamily: "var(--font-dm), sans-serif" }}
     >
       {/* Top + bottom lines */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />

@@ -130,7 +130,7 @@ export default function RealTeachersSection() {
       id="real-teachers"
       aria-labelledby="real-teachers-title"
       className="relative overflow-hidden bg-white py-10"
-      style={{ fontFamily: "'DM Sans', sans-serif" , background: "linear-gradient(160deg, #f0f4f8 0%, #e8eef5 40%, #edf2f7 100%)"}}
+      style={{ fontFamily: "var(--font-dm), sans-serif" , background: "linear-gradient(160deg, #f0f4f8 0%, #e8eef5 40%, #edf2f7 100%)"}}
     >
       {/* Top / bottom rule lines only — no gradients */}
       <div className="absolute top-0 left-0 right-0 h-px bg-slate-100" />

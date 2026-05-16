@@ -1,17 +1,19 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/app/components/Navbar";
 import HeroSection from "@/app/components/sections/HeroSection";
-import Whychoosesection from "@/app/components/sections/Whychoosesection";
-import Challengessection from "@/app/components/sections/Challengessection";
-import Accreditationsection from "@/app/components/sections/Accreditationsection";
-import Designedforsection from "@/app/components/sections/Designedforsection";
-import Learningstylesection from "@/app/components/sections/Learningstylesection";
-import Reviewssection from "@/app/components/sections/Reviewssection";
-import Graduationsection from "@/app/components/sections/Graduationsection";
-import FAQSection from "@/app/components/sections/FAQSection";
-import Neascnewssection from "@/app/components/sections/Neascnewssection";
-import SuccessStories from "@/app/components/sections/SuccessStories";
-import Footer from "./components/Footer";
 
+// Dynamic imports for below-fold components — reduces initial JS bundle dramatically
+const Whychoosesection = dynamic(() => import("@/app/components/sections/Whychoosesection"), { ssr: true });
+const Challengessection = dynamic(() => import("@/app/components/sections/Challengessection"), { ssr: true });
+const Accreditationsection = dynamic(() => import("@/app/components/sections/Accreditationsection"), { ssr: true });
+const Designedforsection = dynamic(() => import("@/app/components/sections/Designedforsection"), { ssr: true });
+const Learningstylesection = dynamic(() => import("@/app/components/sections/Learningstylesection"), { ssr: true });
+const Reviewssection = dynamic(() => import("@/app/components/sections/Reviewssection"), { ssr: true });
+const Graduationsection = dynamic(() => import("@/app/components/sections/Graduationsection"), { ssr: true });
+const SuccessStories = dynamic(() => import("@/app/components/sections/SuccessStories"), { ssr: true });
+const FAQSection = dynamic(() => import("@/app/components/sections/FAQSection"), { ssr: true });
+const Neascnewssection = dynamic(() => import("@/app/components/sections/Neascnewssection"), { ssr: true });
+const Footer = dynamic(() => import("./components/Footer"), { ssr: true });
 
 
 export default function Home() {

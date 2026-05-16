@@ -4,63 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Phone, Mail, MessageCircle, Clock, X, Menu } from "lucide-react";
 
-const animationCSS = `
-  .cta-btn {
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.15);
-    transform: translateX(-100%);
-    transition: transform 0.28s ease;
-  }
-  .cta-btn:hover::before {
-    transform: translateX(0);
-  }
-  .contact-chip {
-    transition: background 0.18s ease;
-  }
-  .contact-chip:hover {
-    background: rgba(255,255,255,0.15) !important;
-  }
-  @keyframes waPulse {
-    0%,100% { transform: scale(1); opacity: 0.5; }
-    50%      { transform: scale(1.6); opacity: 0; }
-  }
-  .wa-pulse::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: rgba(37,211,102,0.45);
-    animation: waPulse 2.2s ease-in-out infinite;
-  }
-  @keyframes mobileMenuIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .mobile-menu-anim {
-    animation: mobileMenuIn 0.22s cubic-bezier(0.16,1,0.3,1) forwards;
-  }
-  .navbar-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-  .navbar-wrapper.navbar-hidden {
-    transform: translateY(-100%);
-  }
-  .navbar-wrapper.navbar-visible {
-    transform: translateY(0);
-  }
-`;
+
 
 const ctaLinks = [
   { label: "Book Free Demo",    href: "https://internationalschooling.org/demo",        primary: false, external: true },
@@ -104,7 +48,6 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{animationCSS}</style>
 
       <div className="h-[3.75rem] lg:h-[calc(3.75rem+2.5rem)]" aria-hidden="true" />
 
