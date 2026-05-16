@@ -264,7 +264,7 @@ export default function RealTeachersSection() {
 
               <p className="text-[0.85rem] text-slate-500 leading-relaxed">
                 Parents also receive regular updates and performance reports to stay involved in their
-                child's learning journey.
+                child&apos;s learning journey.
               </p>
 
               {/* Divider */}

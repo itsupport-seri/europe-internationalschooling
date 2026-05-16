@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { gsap } from "gsap";
 import Image from "next/image";
 
 const SLIDES = [
@@ -24,89 +23,26 @@ export default function HeroSection() {
   const [cur,       setCur]       = useState(0);
   const [prev,      setPrev]      = useState(null);
   const [animating, setAnimating] = useState(false);
-  const [progress,  setProgress]  = useState(0);
 
-  const rafRef     = useRef(null);
-  const startRef   = useRef(null);
   const timerRef   = useRef(null);
-  const heroRef    = useRef(null);
-  const badgeRef   = useRef(null);
-  const eyebrowRef = useRef(null);
-  const line1Ref   = useRef(null);
-  const line2Ref   = useRef(null);
-  const pillsRef   = useRef(null);
-  const ctaRef     = useRef(null);
-  const statsRef   = useRef(null);
   const total      = SLIDES.length;
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.fromTo(badgeRef.current,
-          { opacity: 0, y: 18, scale: 0.92 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.65 }, 0.25)
-        .fromTo(eyebrowRef.current,
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.6 }, 0.4)
-        .fromTo(line1Ref.current,
-          { opacity: 0, y: 36, skewY: 1.5 },
-          { opacity: 1, y: 0, skewY: 0, duration: 0.8 }, 0.5)
-        .fromTo(line2Ref.current,
-          { opacity: 0, y: 36, skewY: 1.5 },
-          { opacity: 1, y: 0, skewY: 0, duration: 0.8 }, 0.62)
-        .fromTo(pillsRef.current,
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.55 }, 0.78)
-        .fromTo(ctaRef.current,
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.6 }, 0.88)
-        .fromTo(statsRef.current,
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.55 }, 1.05);
-    }, heroRef);
-    return () => ctx.revert();
-  }, []);
-
-  useEffect(() => {
-    if (!badgeRef.current) return;
-    const tl = gsap.timeline({ repeat: -1, yoyo: true, delay: 1.8 });
-    tl.to(badgeRef.current, {
-      boxShadow: "0 0 0 8px rgba(251,146,60,0)",
-      duration: 1.2, ease: "power1.inOut",
-    });
-    return () => tl.kill();
-  }, []);
-
-  const runProgress = useCallback(() => {
-    cancelAnimationFrame(rafRef.current);
-    startRef.current = performance.now();
-    const tick = (now) => {
-      const p = Math.min(((now - startRef.current) / DURATION) * 100, 100);
-      setProgress(p);
-      if (p < 100) rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-  }, []);
 
   const goTo = useCallback((idx) => {
     if (animating || idx === cur) return;
     setAnimating(true);
     setPrev(cur);
     setCur(idx);
-    setProgress(0);
-    cancelAnimationFrame(rafRef.current);
-    setTimeout(() => { setPrev(null); setAnimating(false); runProgress(); }, 900);
-  }, [animating, cur, runProgress]);
+    setTimeout(() => { setPrev(null); setAnimating(false); }, 900);
+  }, [animating, cur]);
 
   const goNext = useCallback(() => goTo((cur + 1) % total), [cur, total, goTo]);
   const goPrev = useCallback(() => goTo((cur - 1 + total) % total), [cur, total, goTo]);
 
   useEffect(() => {
     clearTimeout(timerRef.current);
-    runProgress();
     timerRef.current = window.setTimeout(goNext, DURATION);
-    return () => { clearTimeout(timerRef.current); cancelAnimationFrame(rafRef.current); };
-  }, [cur, goNext, runProgress]);
+    return () => { clearTimeout(timerRef.current); };
+  }, [cur, goNext]);
 
   const kbMs = DURATION + 1000;
 
@@ -172,7 +108,9 @@ export default function HeroSection() {
         .seg-fill{
           position:absolute;inset-y:0;left:0;
           background:linear-gradient(90deg,#60a5fa,#fff);border-radius:99px;
+          animation:segProgress linear forwards;
         }
+        @keyframes segProgress{from{width:0}to{width:100%}}
 
         .arr-btn{
           border-radius:50%;
@@ -204,7 +142,22 @@ export default function HeroSection() {
           backdrop-filter:blur(4px);white-space:nowrap;
         }
 
-        .gsap-init{opacity:0}
+        @keyframes heroFadeUp{
+          from{opacity:0;transform:translateY(18px)}
+          to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes heroBadgePulse{
+          0%,100%{box-shadow:0 0 0 0 rgba(251,146,60,.35)}
+          60%{box-shadow:0 0 0 8px rgba(251,146,60,0)}
+        }
+        .gsap-init{opacity:0;animation:heroFadeUp .7s ease both}
+        .hero-intro-badge{animation:heroFadeUp .65s ease .25s both,heroBadgePulse 2.4s ease 1.8s infinite}
+        .hero-intro-eyebrow{animation-delay:.4s}
+        .hero-intro-line1{animation-delay:.5s}
+        .hero-intro-line2{animation-delay:.62s}
+        .hero-intro-pills{animation-delay:.78s}
+        .hero-intro-cta{animation-delay:.88s}
+        .hero-intro-stats{animation-delay:1.05s}
 
         .accent-line{
           position:absolute;top:0;right:0;bottom:0;width:3px;z-index:25;
@@ -271,27 +224,31 @@ export default function HeroSection() {
         }
       `}</style>
 
-      <section ref={heroRef} className="grain hero-outer" aria-label="Hero slider">
+      <section className="grain hero-outer" aria-label="Hero slider">
         <div className="slider-box">
 
           {SLIDES.map((s, i) => {
             const kbMap = {"zoom-in":"kb-zi","zoom-out":"kb-zo","pan-left":"kb-pl","pan-right":"kb-pr"};
+            const isActive = i === cur;
+            const isLeaving = i === prev;
+            if (!isActive && !isLeaving) return null;
             return (
               <div
                 key={s.id}
-                className={`hs-slide${i===cur?" active":""}${i===prev?" leaving":""}`}
-                aria-hidden={i!==cur}
+                className={`hs-slide${isActive?" active":""}${isLeaving?" leaving":""}`}
+                aria-hidden={!isActive}
               >
                 <div className="absolute inset-0 overflow-hidden">
                   <Image
                     src={s.src}
                     alt={s.alt}
                     fill
-                    priority={i === 0}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    sizes="100vw"
+                    priority={i === 0 && isActive}
+                    fetchPriority={i === 0 && isActive ? "high" : "auto"}
+                    loading={isActive ? "eager" : "lazy"}
+                    sizes="(max-width: 480px) 100vw, (max-width: 639px) 480px, 100vw"
                     quality={75}
-                    className={`object-cover object-center select-none${i===cur?` ${kbMap[s.kb]}`:""}`}
+                    className={`object-cover object-center select-none${isActive?` ${kbMap[s.kb]}`:""}`}
                     draggable={false}
                   />
                 </div>
@@ -318,7 +275,7 @@ export default function HeroSection() {
             <div className="w-full px-8 md:px-14 lg:px-20">
               <div className="max-w-[600px]" style={{pointerEvents:"auto"}}>
 
-                <div ref={badgeRef} className="gsap-init inline-flex items-center gap-2 mb-4 md:mb-5"
+                <div className="gsap-init hero-intro-badge inline-flex items-center gap-2 mb-4 md:mb-5"
                   style={{
                     background:"linear-gradient(135deg,rgba(255,237,213,.12),rgba(254,215,170,.08))",
                     border:"1px solid rgba(251,146,60,.35)",borderRadius:"99px",
@@ -331,12 +288,12 @@ export default function HeroSection() {
                   </span>
                 </div>
 
-                <p ref={eyebrowRef} className="gsap-init body-font mb-2"
+                <p className="gsap-init hero-intro-eyebrow body-font mb-2"
                   style={{fontSize:"10px",fontWeight:600,letterSpacing:".25em",textTransform:"uppercase",color:"#93c5fd"}}>
                   Fully Accredited · KG – Grade 12 · American Curriculum
                 </p>
 
-                <div ref={line1Ref} className="gsap-init">
+                <div className="gsap-init hero-intro-line1">
                   <h1 className="headline text-white"
                     style={{fontSize:"24px",lineHeight:1.04,fontWeight:700,marginBottom:"0.05rem"}}>
                     The Most Trusted &amp; Recommended
@@ -344,7 +301,7 @@ export default function HeroSection() {
                   
                 </div>
 
-                <div ref={line2Ref} className="gsap-init">
+                <div className="gsap-init hero-intro-line2">
                   <h1 className="headline text-yellow-400 text-[25px]"
                   style={{fontSize:"clamp(2.1rem,5.8vw,4.4rem)",lineHeight:1.06,fontWeight:700,}}
                     >
@@ -356,13 +313,13 @@ export default function HeroSection() {
                   </h1>
                 </div>
 
-                <div ref={pillsRef} className="gsap-init flex flex-wrap gap-2 mb-5">
+                <div className="gsap-init hero-intro-pills flex flex-wrap gap-2 mb-5">
                   {ACCREDS.map(a=>(
                     <span key={a} className="accred-pill body-font">{a}</span>
                   ))}
                 </div>
 
-                <div ref={ctaRef} className="gsap-init">
+                <div className="gsap-init hero-intro-cta">
                   <a href="https://europe.internationalschooling.org/#book-demo"
                     className="btn-shimmer body-font"
                     style={{display:"inline-flex",alignItems:"center",gap:"7px",padding:"13px 26px",borderRadius:"99px",background:"linear-gradient(135deg,#2563eb 0%,#4f46e5 50%,#7c3aed 100%,#2563eb)",color:"#fff",fontWeight:700,fontSize:"12px",letterSpacing:".09em",textTransform:"uppercase",textDecoration:"none",boxShadow:"0 0 32px rgba(99,102,241,.45),inset 0 1px 0 rgba(255,255,255,.18)",transition:"transform .18s,box-shadow .18s"}}
@@ -377,8 +334,8 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div ref={statsRef}
-            className="stats-desktop gsap-init absolute bottom-7 left-8 md:left-14 lg:left-20 items-center gap-6 md:gap-8"
+          <div
+            className="stats-desktop gsap-init hero-intro-stats absolute bottom-7 left-8 md:left-14 lg:left-20 items-center gap-6 md:gap-8"
             style={{zIndex:22}}>
             {STATS.map((s,i)=>(
               <div key={s.label} className="flex items-center gap-6 md:gap-8">
@@ -403,7 +360,7 @@ export default function HeroSection() {
               {SLIDES.map((_,i)=>(
                 <button key={i} onClick={()=>goTo(i)} aria-label={`Slide ${i+1}`}
                   className={`seg${i===cur?" active":""}`}>
-                  {i===cur && <div className="seg-fill" style={{width:`${progress}%`}} />}
+                  {i===cur && <div key={cur} className="seg-fill" style={{ animationDuration: `${DURATION}ms` }} />}
                 </button>
               ))}
             </div>

@@ -234,7 +234,7 @@ export default function SuccessStories() {
           </h2>
           <p style={{ fontSize: "clamp(0.95rem,2vw,1.1rem)", color: "#5a6480", lineHeight: 1.75 }}>
             Real journeys from students and families balancing ambition, academics, and support —
-            each one a testament to what's possible with the right learning environment.
+            each one a testament to what&apos;s possible with the right learning environment.
           </p>
         </header>
 
@@ -393,7 +393,7 @@ export default function SuccessStories() {
                         display: "-webkit-box", WebkitLineClamp: 3,
                         WebkitBoxOrient: "vertical", overflow: "hidden",
                       }}>
-                        "{story.title}"
+                        &quot;{story.title}&quot;
                       </h3>
                       <p style={{
                         fontSize: "13px", color: "#5a6480", lineHeight: 1.7,

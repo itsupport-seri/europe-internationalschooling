@@ -636,7 +636,7 @@ export default function Footer() {
 
             {subscribed ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#34d399", fontWeight: 600, fontSize: "14px" }}>
-                <Heart size={16} fill="#34d399" color="#34d399" /> You're subscribed — thank you!
+                <Heart size={16} fill="#34d399" color="#34d399" /> You&apos;re subscribed — thank you!
               </div>
             ) : (
               <form onSubmit={handleSub} style={{ display: "flex", width: "clamp(260px,36vw,420px)" }} className="nl-form">

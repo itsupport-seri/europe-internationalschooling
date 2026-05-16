@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Phone, Mail, MessageCircle, Clock, X, Menu } from "lucide-react";
 
 
@@ -112,7 +113,7 @@ export default function Navbar() {
         <div className="bg-white shadow-md border-b border-gray-200">
           <div className="max-w-screen-xl mx-auto px-3 lg:px-6 flex items-center h-[3.75rem]">
 
-            <a href="/" className="shrink-0 flex items-center">
+            <Link href="/" className="shrink-0 flex items-center">
               <Image
                 src="/logo.avif"
                 alt="International Schooling"
@@ -121,7 +122,7 @@ export default function Navbar() {
                 className="h-6 lg:h-8 w-auto object-contain"
                 priority
               />
-            </a>
+            </Link>
 
             <div className="hidden lg:flex items-center gap-2 ml-auto">
               {ctaLinks.map((cta) =>

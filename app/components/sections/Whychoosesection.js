@@ -48,7 +48,6 @@ const FEATURES = [
 
 export default function WhyChooseSection() {
   const sectionRef = useRef(null);
-  const tagRef     = useRef(null);
   const head1Ref   = useRef(null);
   const head2Ref   = useRef(null);
   const subRef     = useRef(null);
@@ -108,12 +107,9 @@ export default function WhyChooseSection() {
       });
 
       headTl
-        .fromTo(tagRef.current,
-          { opacity: 0, y: 16, scale: 0.9 },
-          { opacity: 1, y: 0,  scale: 1, duration: 0.6 })
         .fromTo(head1Ref.current,
           { opacity: 0, y: 36 },
-          { opacity: 1, y: 0,  duration: 0.75 }, "-=0.3")
+          { opacity: 1, y: 0,  duration: 0.75 })
         .fromTo(head2Ref.current,
           { opacity: 0, y: 40, skewY: 1.5 },
           { opacity: 1, y: 0,  skewY: 0, duration: 0.8 }, "-=0.5")
