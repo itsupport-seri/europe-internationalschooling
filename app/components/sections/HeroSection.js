@@ -2,12 +2,16 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import slide1 from "@/public/slider/1.webp";
+import slide2 from "@/public/slider/2.webp";
+import slide3 from "@/public/slider/3.webp";
+import slide4 from "@/public/slider/4.webp";
 
 const SLIDES = [
-  { id: 1, src: "/slider/1.webp", alt: "Students learning online",    kb: "zoom-in"   },
-  { id: 2, src: "/slider/2.webp", alt: "Global classroom",            kb: "pan-left"  },
-  { id: 3, src: "/slider/3.webp", alt: "Teachers and students",       kb: "zoom-out"  },
-  { id: 4, src: "/slider/4.webp", alt: "Online learning environment", kb: "pan-right" },
+  { id: 1, src: slide1, alt: "Students learning online",    kb: "zoom-in"   },
+  { id: 2, src: slide2, alt: "Global classroom",            kb: "pan-left"  },
+  { id: 3, src: slide3, alt: "Teachers and students",       kb: "zoom-out"  },
+  { id: 4, src: slide4, alt: "Online learning environment", kb: "pan-right" },
 ];
 const DURATION = 6000;
 
@@ -246,8 +250,9 @@ export default function HeroSection() {
                     priority={i === 0 && isActive}
                     fetchPriority={i === 0 && isActive ? "high" : "auto"}
                     loading={isActive ? "eager" : "lazy"}
+                    placeholder="blur"
                     sizes="(max-width: 480px) 100vw, (max-width: 639px) 480px, 100vw"
-                    quality={75}
+                    quality={65}
                     className={`object-cover object-center select-none${isActive?` ${kbMap[s.kb]}`:""}`}
                     draggable={false}
                   />

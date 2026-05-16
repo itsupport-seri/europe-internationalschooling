@@ -5,7 +5,7 @@ const playfair = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["700", "800"],
-  display: "swap", 
+  display: "swap",
   preload: false,
 });
 

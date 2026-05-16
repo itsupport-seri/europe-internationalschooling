@@ -48,7 +48,7 @@ function LazyMount({ children, minHeight }) {
           observer.disconnect();
         }
       },
-      { rootMargin: "1400px 0px", threshold: 0 }
+      { rootMargin: "600px 0px", threshold: 0 }
     );
 
     const node = ref.current;
